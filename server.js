@@ -3,47 +3,23 @@ import { ApolloServer, gql } from 'apollo-server-express'
 import cors from 'cors'
 import dotEnv from 'dotenv'
 
+import { connection } from './database/util/index.js'
+
+import { typeDefs } from './typeDefs/index.js'
+import { resolvers } from './resolvers/index.js'
+
 dotEnv.config()
 
 const app = express()
+
+//databse connection
+connection()
 
 //middleware
 //body parser
 app.use(express.json())
 //cors
 app.use(cors())
-
-const typeDefs = gql`
-    type Query {
-        greetings: String
-    }
-
-    type User {
-        id: ID!
-        username: String!
-        email: String!
-        company: Company
-    }
-
-    type Company {
-        id: ID!
-        name: String!
-        user: User
-    }
-
-    type Form {
-        id: ID!
-        name: String!
-    }
-`
-
-const resolvers = {
-    Query: {
-        greetings: () => {
-            return 'hallo'
-        }
-    }
-}
 
 const apolloServer = new ApolloServer({
     typeDefs,

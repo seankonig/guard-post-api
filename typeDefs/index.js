@@ -5,6 +5,7 @@ import userTypeDefs from './userTypeDefs.js'
 import profileTypeDefs from './profileTypeDefs.js'
 
 const types = gql`
+    scalar Date
     type Query {
         _: String
     }

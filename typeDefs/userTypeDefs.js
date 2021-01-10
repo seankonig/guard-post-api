@@ -4,6 +4,7 @@ const userTypeDefs = gql`
     extend type Query {
         users: [User]
         user(id: ID!): User
+        me: User
     }
 
     input signUpInput {
@@ -11,8 +12,18 @@ const userTypeDefs = gql`
         password: String!
     }
 
+    input loginInput {
+        username: String!
+        password: String!
+    }
+
     extend type Mutation {
-        signUp(input: signUpInput!): User
+        signUp(input: signUpInput): User
+        login(input: loginInput): Token
+    }
+
+    type Token {
+        token: String!
     }
 
     type User {
@@ -20,6 +31,8 @@ const userTypeDefs = gql`
         username: String!
         password: String!
         profile: Profile
+        createdAt: Date!
+        updatedAt: Date!
     }
 `
 

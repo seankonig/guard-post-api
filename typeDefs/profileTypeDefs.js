@@ -5,16 +5,16 @@ const profileTypeDefs = gql`
         profile: Profile
     }
 
-    input createProfileInput {
+    input udpateProfileInput {
         firstName: String!
         lastName: String!
         email: String!
         birthDate: String
-        userID: String!
+        userId: String!
     }
 
     extend type Mutation {
-        createProfile(input: createProfileInput!): Profile
+        updateProfile(input: udpateProfileInput!): Profile
     }
 
     type Profile {

@@ -1,19 +1,15 @@
-import { uuid } from 'uuidv4'
-import { profiles, establishments } from '../constants/index.js'
+import { combineResolvers } from 'graphql-resolvers'
+import { isAuthenticated } from './middleware/index.js'
+
+import { fetchUserProfile, updateUserProfile } from '../services/profileService.js'
+import { establishments } from '../constants/index.js'
 
 const profileResolver = {
     Query: {
-        profile: (_, { id }) => profiles.find((profile) => profile.id === id)
+        profile: (_, { id }) => fetchUserProfile(id)
     },
     Mutation: {
-        createProfile: (_, { input }) => {
-            const profile = {
-                ...input,
-                id: uuid()
-            }
-            profiles.push(profile)
-            return profile
-        }
+        updateProfile: combineResolvers(isAuthenticated, (_, { input }) => updateUserProfile(input))
     },
     Profile: {
         establishment: ({ id }) => {

@@ -1,6 +1,4 @@
 import mongoose from 'mongoose'
-import unique from 'mongoose-unique-validator'
-import { isEmail } from 'validator'
 
 const schema = new mongoose.Schema(
     {
@@ -19,9 +17,7 @@ const schema = new mongoose.Schema(
         email: {
             type: String,
             trim: true,
-            required: [true, 'You need to provide a valid email'],
-            validate: [isEmail, 'Please provide a valid email address'],
-            unique: true
+            required: [true, 'You need to provide a valid email']
         },
         birthDate: {
             type: String,
@@ -41,6 +37,5 @@ const schema = new mongoose.Schema(
     }
 )
 
-schema.plugin(unique)
-
-export const ProfileSchema = mongoose.model('Profile', schema)
+const Profile = mongoose.model('Profile', schema)
+export default Profile

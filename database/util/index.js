@@ -5,7 +5,8 @@ export const connection = async () => {
         await mongoose.connect(process.env.MONGO_DB_URL, {
             useNewUrlParser: true,
             useUnifiedTopology: true,
-            useCreateIndex: true
+            useCreateIndex: true,
+            useFindAndModify: false
         })
         console.log('connected mongo')
     } catch (error) {

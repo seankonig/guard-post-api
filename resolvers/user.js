@@ -1,32 +1,22 @@
-import { profiles, users } from '../constants/index.js'
-import User from '../database/models/User.js'
+import { combineResolvers } from 'graphql-resolvers'
+import { isAuthenticated } from './middleware/index.js'
 
-import bcrypt from 'bcrypt'
+import { signUp, login } from '../services/authService.js'
+import { fetchAllUsers, findUser, me } from '../services/userService.js'
+import { fetchUserProfile } from '../services/profileService.js'
 
 const userResolver = {
     Query: {
-        users: () => users,
-        user: (_, { id }) => users.find((user) => user.id === id)
+        users: combineResolvers(isAuthenticated, () => fetchAllUsers()),
+        user: combineResolvers(isAuthenticated, (_, { id }) => findUser(id)),
+        me: combineResolvers(isAuthenticated, (_, {}, { userId }) => me(userId))
     },
     Mutation: {
-        signUp: async (_, { input }) => {
-            try {
-                const hashedPassword = await bcrypt.hash(input.password, 11)
-
-                const newUser = new User({ ...input, password: hashedPassword })
-
-                const result = await newUser.save()
-                return result
-            } catch (error) {
-                console.log(error)
-                throw error
-            }
-        }
+        signUp: (_, { input }) => signUp(input),
+        login: (_, { input }) => login(input)
     },
     User: {
-        profile: ({ id }) => {
-            return profiles.find((profile) => id === profile.userID)
-        }
+        profile: combineResolvers(isAuthenticated, ({ id }) => fetchUserProfile(id))
     }
 }
 

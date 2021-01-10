@@ -8,6 +8,8 @@ import { connection } from './database/util/index.js'
 import { typeDefs } from './typeDefs/index.js'
 import { resolvers } from './resolvers/index.js'
 
+import { verifyUser } from './services/authService.js'
+
 dotEnv.config()
 
 const app = express()
@@ -23,7 +25,13 @@ app.use(cors())
 
 const apolloServer = new ApolloServer({
     typeDefs,
-    resolvers
+    resolvers,
+    context: async ({ req }) => {
+        await verifyUser(req)
+        return {
+            userId: req.userId
+        }
+    }
 })
 
 apolloServer.applyMiddleware({ app, path: '/graphql' })

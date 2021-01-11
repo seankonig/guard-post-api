@@ -16,7 +16,7 @@ const userResolver = {
         login: (_, { input }) => login(input)
     },
     User: {
-        profile: combineResolvers(isAuthenticated, ({ id }) => fetchUserProfile(id))
+        profile: combineResolvers(isAuthenticated, (parent, {}, { loaders }) => fetchUserProfile(parent, loaders))
     }
 }
 

@@ -2,6 +2,7 @@ import express from 'express'
 import { ApolloServer, gql } from 'apollo-server-express'
 import cors from 'cors'
 import dotEnv from 'dotenv'
+import DataLoader from 'dataloader'
 
 import { connection } from './database/util/index.js'
 
@@ -9,6 +10,8 @@ import { typeDefs } from './typeDefs/index.js'
 import { resolvers } from './resolvers/index.js'
 
 import { verifyUser } from './services/authService.js'
+
+import loaders from './loaders/index.js'
 
 dotEnv.config()
 
@@ -29,7 +32,10 @@ const apolloServer = new ApolloServer({
     context: async ({ req }) => {
         await verifyUser(req)
         return {
-            userId: req.userId
+            userId: req.userId,
+            loaders: {
+                user: new DataLoader((keys) => loaders.users.batchUsers(keys))
+            }
         }
     }
 })

@@ -8,15 +8,12 @@ export const updateUserProfile = async (input) => {
         if (!isValidEmail) {
             throw new Error('The provided email address is not Valid')
         }
-        const profile = await Profile.findOneAndUpdate(input.userId, { ...input }, { new: true })
-        const user = await User.findById(input.userId)
-
+        const profile = await Profile.findOneAndUpdate({ user: input.userId }, { ...input }, { new: true })
         if (!profile) {
             const newProfile = new Profile({
                 ...input,
                 user: input.userId
             })
-
             const result = newProfile.save()
 
             return result
@@ -29,10 +26,9 @@ export const updateUserProfile = async (input) => {
     }
 }
 
-export const fetchUserProfile = async (userId) => {
-    console.log(userId)
+export const fetchUserProfile = async (parent, loaders) => {
     try {
-        const profile = await Profile.findOne({ user: userId })
+        const profile = await loaders.user.load(parent)
         return profile
     } catch (error) {
         console.log(error)

@@ -5,16 +5,18 @@ import {
     fetchUserProfile,
     updateUserProfile,
     fetchProfile,
-    fetchEstablishmentProfiles
+    fetchEstablishmentProfiles,
+    createProfile
 } from '../services/profileService.js'
 import { fetchEstablishment } from '../services/establishmentService.js'
 
 const profileResolver = {
     Query: {
         profile: combineResolvers(isAuthenticated, (_, { id }) => fetchProfile(id)),
-        establismentProfiles: combineResolvers(isAuthenticated, (_, { id }) => fetchEstablishmentProfiles(id))
+        establishmentProfiles: combineResolvers(isAuthenticated, (_, { id }) => fetchEstablishmentProfiles(id))
     },
     Mutation: {
+        createProfile: combineResolvers(isAuthenticated, (_, { input }) => createProfile(input)),
         updateProfile: combineResolvers(isAuthenticated, (_, { input }) => updateUserProfile(input))
     },
     Profile: {

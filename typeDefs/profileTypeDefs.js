@@ -3,7 +3,7 @@ import { gql } from 'apollo-server-express'
 const profileTypeDefs = gql`
     extend type Query {
         profile(id: ID!): Profile
-        establismentProfiles(id: ID!): [Profile] #establishmentID
+        establishmentProfiles(id: ID!): [Profile] #establishmentID
     }
 
     input udpateProfileInput {
@@ -14,7 +14,16 @@ const profileTypeDefs = gql`
         userId: String!
     }
 
+    input createProfile {
+        firstName: String!
+        lastName: String!
+        email: String
+        birthDate: String
+        establishmentId: String!
+    }
+
     extend type Mutation {
+        createProfile(input: createProfile!): Profile
         updateProfile(input: udpateProfileInput!): Profile
     }
 
@@ -22,9 +31,9 @@ const profileTypeDefs = gql`
         id: ID!
         firstName: String!
         lastName: String!
-        email: String!
-        birthDate: String!
-        establishment: Establishment
+        email: String
+        birthDate: String
+        establishment: Establishment!
         user: User
     }
 `

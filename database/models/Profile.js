@@ -16,8 +16,7 @@ const schema = new mongoose.Schema(
         },
         email: {
             type: String,
-            trim: true,
-            required: [true, 'You need to provide a valid email']
+            trim: true
         },
         birthDate: {
             type: String,

@@ -14,12 +14,32 @@ export const updateUserProfile = async (input) => {
                 ...input,
                 user: input.userId
             })
-            const result = newProfile.save()
 
-            return result
+            const result = newProfile.save()
+            if (result) {
+                return result
+            }
         }
 
         return profile
+    } catch (error) {
+        console.log(error)
+        throw new Error(error)
+    }
+}
+
+export const createProfile = async (input) => {
+    try {
+        console.log(input)
+        const newProfile = new Profile({
+            ...input,
+            establishment: input.establishmentId
+        })
+
+        const result = newProfile.save()
+        if (result) {
+            return result
+        }
     } catch (error) {
         console.log(error)
         throw new Error(error)

@@ -1,9 +1,18 @@
-import { establishments } from '../constants/index.js'
+import { combineResolvers } from 'graphql-resolvers'
+import { isAuthenticated } from './middleware/index.js'
+
+import { createEstablishment } from '../services/establishmentService.js'
 
 const establishmentResolver = {
     Query: {
-        establishments: () => establishments,
-        establishment: (_, { id }) => establishments.find((est) => est.id === id)
+        establishments: () => [],
+        establishment: (_, { id }) => null
+    },
+
+    Mutation: {
+        createEstablishment: combineResolvers(isAuthenticated, (_, { input }, { userId }) =>
+            createEstablishment(input, userId)
+        )
     }
 }
 

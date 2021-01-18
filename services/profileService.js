@@ -26,9 +26,37 @@ export const updateUserProfile = async (input) => {
     }
 }
 
+export const fetchProfile = async (id) => {
+    try {
+        const profile = await Profile.findById(id)
+
+        if (profile) {
+            return profile
+        }
+    } catch (error) {
+        console.log(error)
+        throw new Error(error)
+    }
+}
+
+export const fetchEstablishmentProfiles = async (id) => {
+    try {
+        console.log(id)
+        const profiles = await Profile.find({ establishment: id })
+        console.log(profiles)
+        if (profiles) {
+            return profiles
+        }
+    } catch (error) {
+        console.log(error)
+        throw new Error(error)
+    }
+}
+
 export const fetchUserProfile = async (parent, loaders) => {
     try {
-        const profile = await loaders.user.load(parent)
+        const profile = await loaders.profile.load(parent)
+
         return profile
     } catch (error) {
         console.log(error)

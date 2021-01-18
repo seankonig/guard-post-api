@@ -5,6 +5,7 @@ const userTypeDefs = gql`
         users: [User]
         user(id: ID!): User
         me: User
+        loggedInUser: User
     }
 
     input signUpInput {

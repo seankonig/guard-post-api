@@ -2,7 +2,8 @@ import { gql } from 'apollo-server-express'
 
 const profileTypeDefs = gql`
     extend type Query {
-        profile: Profile
+        profile(id: ID!): Profile
+        establismentProfiles(id: ID!): [Profile] #establishmentID
     }
 
     input udpateProfileInput {

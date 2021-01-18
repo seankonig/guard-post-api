@@ -7,15 +7,12 @@ const schema = new mongoose.Schema(
             type: String,
             trim: true,
             required: [true, 'You need to provide a Name for the Establishment'],
-            min: [2, 'Establishment Name should contain at least 2 characters'],
-            unique: true
+            min: [2, 'Establishment Name should contain at least 2 characters']
         }
     },
     {
         timestamps: true
     }
 )
-
-schema.plugin(unique)
-
-export const EstablishmentSchema = mongoose.model('Establishment', schema)
+const Establishment = mongoose.model('Establishment', schema)
+export default Establishment

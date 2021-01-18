@@ -1,5 +1,5 @@
-import users from './user.js'
+import profiles from './profiles.js'
 
-const loaders = { users }
+const loaders = { profiles }
 
 export default loaders

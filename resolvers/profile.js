@@ -1,20 +1,25 @@
 import { combineResolvers } from 'graphql-resolvers'
 import { isAuthenticated } from './middleware/index.js'
 
-import { fetchUserProfile, updateUserProfile } from '../services/profileService.js'
-import { establishments } from '../constants/index.js'
+import {
+    fetchUserProfile,
+    updateUserProfile,
+    fetchProfile,
+    fetchEstablishmentProfiles
+} from '../services/profileService.js'
+import { fetchEstablishment } from '../services/establishmentService.js'
 
 const profileResolver = {
     Query: {
-        profile: (_, { id }) => fetchUserProfile(id)
+        profile: combineResolvers(isAuthenticated, (_, { id }) => fetchProfile(id)),
+        establismentProfiles: combineResolvers(isAuthenticated, (_, { id }) => fetchEstablishmentProfiles(id))
     },
     Mutation: {
         updateProfile: combineResolvers(isAuthenticated, (_, { input }) => updateUserProfile(input))
     },
     Profile: {
-        establishment: ({ id }) => {
-            return establishments.find((est) => id === est.id)
-        }
+        user: combineResolvers(isAuthenticated, (parent, {}, { loaders }) => fetchUserProfile(parent, loaders)),
+        establishment: combineResolvers(isAuthenticated, ({ establishment }) => fetchEstablishment(establishment))
     }
 }
 

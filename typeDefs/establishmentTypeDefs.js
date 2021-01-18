@@ -6,6 +6,14 @@ const establishmentTypeDefs = gql`
         establishment(id: ID!): Establishment
     }
 
+    input createEstablishment {
+        name: String!
+    }
+
+    extend type Mutation {
+        createEstablishment(input: createEstablishment!): Establishment
+    }
+
     type Establishment {
         id: ID!
         name: String!

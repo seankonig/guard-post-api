@@ -1,14 +1,12 @@
 import User from '../database/models/User.js'
 
-const batchUsers = async (userIds) => {
-    console.log(userIds)
-    const users = await User.find({ _id: { $in: userIds } })
-
-    return userIds.map((userId) => users.find((user) => user.id === userId))
+const batchUsers = async (users) => {
+    const user = await User.find({ user: { $in: users } })
+    return users.map((user) => profiles.find((profile) => user.equals(profile.user)))
 }
 
 const users = {
-    batchUsers
+    batchProfiles
 }
 
 export default users

@@ -34,7 +34,8 @@ const apolloServer = new ApolloServer({
         return {
             userId: req.userId,
             loaders: {
-                profile: new DataLoader((keys) => loaders.profiles.batchProfiles(keys))
+                profile: new DataLoader((keys) => loaders.profiles.batchProfiles(keys)),
+                client: new DataLoader((keys) => loaders.client.batchSites(keys))
             }
         }
     }

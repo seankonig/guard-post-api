@@ -29,6 +29,10 @@ const schema = new mongoose.Schema(
         establishment: {
             type: mongoose.Schema.Types.ObjectId,
             ref: 'Establishment'
+        },
+        type: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'ProfileType'
         }
     },
     {

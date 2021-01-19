@@ -1,25 +1,17 @@
 import Profile from '../database/models/Profile.js'
 import validator from 'validator'
-import User from '../database/models/User.js'
 
 export const updateUserProfile = async (input) => {
     try {
-        const isValidEmail = validator.isEmail(input.email)
-        if (!isValidEmail) {
-            throw new Error('The provided email address is not Valid')
-        }
-        const profile = await Profile.findOneAndUpdate({ user: input.userId }, { ...input }, { new: true })
-        if (!profile) {
-            const newProfile = new Profile({
-                ...input,
-                user: input.userId
-            })
-
-            const result = newProfile.save()
-            if (result) {
-                return result
-            }
-        }
+        // const isValidEmail = validator.isEmail(input.email)
+        // if (!isValidEmail) {
+        //     throw new Error('The provided email address is not Valid')
+        // }
+        const profile = await Profile.findOneAndUpdate(
+            { user: input.userId },
+            { ...input, establishment: input.establishmentId, type: input.typeId },
+            { new: true }
+        )
 
         return profile
     } catch (error) {
@@ -30,13 +22,13 @@ export const updateUserProfile = async (input) => {
 
 export const createProfile = async (input) => {
     try {
-        console.log(input)
         const newProfile = new Profile({
             ...input,
-            establishment: input.establishmentId
+            establishment: input.establishmentId,
+            type: input.typeId
         })
 
-        const result = newProfile.save()
+        const result = await newProfile.save()
         if (result) {
             return result
         }
@@ -61,9 +53,7 @@ export const fetchProfile = async (id) => {
 
 export const fetchEstablishmentProfiles = async (id) => {
     try {
-        console.log(id)
         const profiles = await Profile.find({ establishment: id })
-        console.log(profiles)
         if (profiles) {
             return profiles
         }

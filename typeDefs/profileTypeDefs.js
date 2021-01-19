@@ -11,7 +11,7 @@ const profileTypeDefs = gql`
         lastName: String!
         email: String!
         birthDate: String
-        userId: String!
+        typeId: String!
     }
 
     input createProfile {
@@ -20,6 +20,7 @@ const profileTypeDefs = gql`
         email: String
         birthDate: String
         establishmentId: String!
+        typeId: String!
     }
 
     extend type Mutation {
@@ -35,6 +36,7 @@ const profileTypeDefs = gql`
         birthDate: String
         establishment: Establishment!
         user: User
+        type: ProfileType
     }
 `
 

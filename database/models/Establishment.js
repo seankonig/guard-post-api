@@ -1,5 +1,4 @@
 import mongoose from 'mongoose'
-import unique from 'mongoose-unique-validator'
 
 const schema = new mongoose.Schema(
     {

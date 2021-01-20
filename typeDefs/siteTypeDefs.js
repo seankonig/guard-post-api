@@ -27,6 +27,7 @@ const siteTypeDefs = gql`
         lat: String!
         lng: String!
         client: Client
+        createdAt: Date
     }
 `
 

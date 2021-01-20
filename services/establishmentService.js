@@ -15,6 +15,5 @@ export const createEstablishment = async ({ name }, userId) => {
 
 export const fetchEstablishment = async (est) => {
     const establishment = await Establishment.findById(est)
-    console.log(establishment)
     return establishment
 }

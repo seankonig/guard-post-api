@@ -29,9 +29,9 @@ export const fetchClient = async (id) => {
 
 export const createClient = async (input) => {
     try {
-        console.log(input)
         const client = new Client({
-            ...input
+            ...input,
+            establishment: input.establishmentId
         })
 
         const result = await client.save()

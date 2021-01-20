@@ -13,6 +13,10 @@ const schema = new mongoose.Schema(
             trim: true,
             required: [true, 'You need to provide a contact email']
         },
+        establishment: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Establishment'
+        },
         sites: [
             {
                 type: mongoose.Schema.Types.ObjectId,

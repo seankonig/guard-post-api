@@ -9,6 +9,7 @@ const clientTypeDefs = gql`
     input createClient {
         name: String!
         email: String!
+        establishmentId: String!
     }
 
     extend type Mutation {

@@ -29,7 +29,6 @@ export const fetchSite = async (id) => {
 
 export const createSite = async (input) => {
     try {
-        console.log(input)
         const site = new Site({
             ...input,
             client: input.clientId

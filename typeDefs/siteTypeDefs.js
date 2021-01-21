@@ -15,8 +15,18 @@ const siteTypeDefs = gql`
         clientId: String!
     }
 
+    input updateSite {
+        id: ID!
+        name: String!
+        number: String!
+        description: String!
+        lat: String!
+        lng: String!
+    }
+
     extend type Mutation {
         createSite(input: createSite!): Site
+        updateSite(input: updateSite!): Site
     }
 
     type Site {
@@ -27,7 +37,7 @@ const siteTypeDefs = gql`
         lat: String!
         lng: String!
         client: Client
-        createdAt: Date
+        createdAt: Date!
     }
 `
 

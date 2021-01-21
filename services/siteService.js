@@ -47,3 +47,24 @@ export const createSite = async (input) => {
         throw new Error(error)
     }
 }
+
+export const updateSite = async (input) => {
+    try {
+        const site = await Site.findByIdAndUpdate(
+            input.id,
+            {
+                name: input.name,
+                number: input.number,
+                description: input.description,
+                lat: input.lat,
+                lng: input.lng
+            },
+            { new: true }
+        )
+
+        return site
+    } catch (error) {
+        console.log(error)
+        throw new Error(error)
+    }
+}
